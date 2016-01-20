@@ -23,14 +23,18 @@ namespace HDT_GameRecorder
 
             if (gameOngoing)
             {
-                GameMode currentGameMode = Core.Game.CurrentGameMode;
-                OBSUtils.startRecording();
+                onGameStart();
+
             }
         }
 
         private static void onGameStart()
         {
-
+            GameMode currentGameMode = Core.Game.CurrentGameMode;
+            if (PluginConfig.Instance.recordedGameModes.Contains(currentGameMode))
+            {
+                OBSUtils.startRecording();
+            }
         }
 
         private static void onGameEnd()
