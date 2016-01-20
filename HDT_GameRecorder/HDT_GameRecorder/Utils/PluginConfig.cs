@@ -10,13 +10,31 @@ namespace HDT_GameRecorder.Utils
     [Serializable]
     class PluginConfig
     {
-        public List<GameMode> recordedGameModes;
+
+
+        public List<GameMode> recordedGameModes { get; set; }
 
         private const string STORAGE_FILE_NAME = "config.xml";
 
+        //Singleton pattern
+        [XmlIgnore]
+        private static PluginConfig _instance = null;
+
         private PluginConfig()
         {
+            ///TODO: Load config data
+        }
 
+        public static PluginConfig Instance {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new PluginConfig();
+                }
+
+                return _instance;
+            }
         }
     }
 }
