@@ -42,7 +42,7 @@ namespace HDT_GameRecorder.Utils
         {
             get
             {
-                return Hearthstone_Deck_Tracker.Config.Instance.AppDataPath + @"\VideoRecorder";
+                return Hearthstone_Deck_Tracker.Config.AppDataPath + @"\VideoRecorder";
             }
         }
 
