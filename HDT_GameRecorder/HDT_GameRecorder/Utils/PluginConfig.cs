@@ -22,7 +22,6 @@ namespace HDT_GameRecorder.Utils
 
         private PluginConfig()
         {
-            ///TODO: Load config data
         }
 
         public static PluginConfig Instance {
@@ -31,9 +30,37 @@ namespace HDT_GameRecorder.Utils
                 if (_instance == null)
                 {
                     _instance = new PluginConfig();
+                    _instance.loadFromFile(_instance.AppDataPath + @"\" + STORAGE_FILE_NAME);
                 }
 
                 return _instance;
+            }
+        }
+
+        [XmlIgnore]
+        public string AppDataPath
+        {
+            get
+            {
+                return Hearthstone_Deck_Tracker.Config.Instance.AppDataPath + @"\VideoRecorder";
+            }
+        }
+
+        private void loadFromFile(string file)
+        {
+            //Check if directory exists
+            if (!Directory.Exists(AppDataPath))
+            {
+                Directory.CreateDirectory(AppDataPath);
+            }
+
+
+            if (File.Exists(file))
+            {
+
+            } else //require init
+            {
+
             }
         }
     }
