@@ -21,6 +21,11 @@ namespace HDT_GameRecorder.Utils
             return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\OBS";
         }
 
+        public static string getExecutablePath()
+        {
+            return "";
+        }
+
         public static List<string> getProfiles()
         {
             string path = getConfigPath() + @"\profiles";
@@ -39,6 +44,21 @@ namespace HDT_GameRecorder.Utils
             }
 
             return result;
+        }
+
+        public static Boolean isObsRunning()
+        {
+            return false;
+        }
+
+        public static void startObs()
+        {
+            if (OBSUtils.isObsRunning())
+            {
+                return;
+            }
+
+            //Start OBS
         }
 
         public static Boolean isObsInstalled()
