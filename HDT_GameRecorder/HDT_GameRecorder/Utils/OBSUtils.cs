@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
+using System.Linq;
+using System.Management;
 
 
 namespace HDT_GameRecorder.Utils
@@ -60,14 +62,30 @@ namespace HDT_GameRecorder.Utils
 
         public static Boolean isObsRunning()
         {
-            string fileNameToFilter = Path.GetFullPath(getExecutablePath());
-            foreach (Process p in Process.GetProcesses())
-            {
-                string fileName = Path.GetFullPath(p.MainModule.FileName);
+            string fileName = Path.GetFullPath(getExecutablePath());
 
-                if (string.Compare(fileNameToFilter, fileName, true) == 0)
+            var wmiQueryString = "SELECT ProcessId, ExecutablePath, CommandLine FROM Win32_Process";
+            using (var searcher = new ManagementObjectSearcher(wmiQueryString))
+            using (var results = searcher.Get())
+            {
+                var query = from p in Process.GetProcesses()
+                            join mo in results.Cast<ManagementObject>()
+                            on p.Id equals (int)(uint)mo["ProcessId"]
+                            select new
+                            {
+                                Process = p,
+                                Path = (string)mo["ExecutablePath"],
+                                CommandLine = (string)mo["CommandLine"],
+                            };
+                foreach (var item in query)
                 {
-                    return true;
+                    // Do what you want with the Process, Path, and CommandLine
+                    if (item.Path == null) continue;
+                    string fileNameProcess = Path.GetFullPath( item.Path);
+                    if (string.Compare(fileNameProcess, fileName, true) == 0)
+                    {
+                        return true;
+                    }
                 }
             }
             return false;

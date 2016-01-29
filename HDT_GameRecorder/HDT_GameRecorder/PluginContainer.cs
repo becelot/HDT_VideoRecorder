@@ -65,6 +65,7 @@ namespace HDT_GameRecorder
             foreach(string s in profiles)
             {
                 Hearthstone_Deck_Tracker.Logger.WriteLine(s);
+                Hearthstone_Deck_Tracker.Logger.WriteLine(OBSUtils.isObsRunning().ToString());
             }
         }
 
