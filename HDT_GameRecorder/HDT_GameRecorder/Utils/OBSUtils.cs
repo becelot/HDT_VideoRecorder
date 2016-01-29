@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Diagnostics;
 
 
 namespace HDT_GameRecorder.Utils
 {
     class OBSUtils
     {
+        private static String lastExecutablePath = "";
         private OBSUtils() { }
 
         public static string getConfigPath()
@@ -21,9 +23,19 @@ namespace HDT_GameRecorder.Utils
             return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\OBS";
         }
 
+        public static string getInstallDirectory()
+        {
+            if (lastExecutablePath == "")
+            {
+                IniFile ini = new IniFile(getConfigPath() + @"\global.ini");
+                lastExecutablePath = ini.IniReadValue("General", "LastAppDirectory");
+            }
+            return lastExecutablePath;
+        }
+
         public static string getExecutablePath()
         {
-            return "";
+            return getInstallDirectory() + @"\OBS.exe";
         }
 
         public static List<string> getProfiles()
@@ -48,6 +60,16 @@ namespace HDT_GameRecorder.Utils
 
         public static Boolean isObsRunning()
         {
+            string fileNameToFilter = Path.GetFullPath(getExecutablePath());
+            foreach (Process p in Process.GetProcesses())
+            {
+                string fileName = Path.GetFullPath(p.MainModule.FileName);
+
+                if (string.Compare(fileNameToFilter, fileName, true) == 0)
+                {
+                    return true;
+                }
+            }
             return false;
         }
 
