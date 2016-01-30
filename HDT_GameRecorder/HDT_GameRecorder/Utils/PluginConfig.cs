@@ -6,14 +6,13 @@ using System.Linq;
 using System.Xml.Serialization;
 
 using Hearthstone_Deck_Tracker.Utility;
+using System.ComponentModel;
 
 namespace HDT_GameRecorder.Utils
 {
-    [Serializable]
     class PluginConfig
     {
-
-
+        [DefaultValue(null)]
         public List<GameMode> recordedGameModes { get; set; }
 
         private const string STORAGE_FILE_NAME = "config.xml";
@@ -32,7 +31,8 @@ namespace HDT_GameRecorder.Utils
                 if (_instance == null)
                 {
                     _instance = new PluginConfig();
-                    _instance.loadFromFile(_instance.AppDataPath + @"\" + STORAGE_FILE_NAME);
+                    Hearthstone_Deck_Tracker.Logger.WriteLine("Load recorder settings from config.xml: " + _instance.ConfigFile);
+                    loadFromFile(_instance.ConfigFile);
                 }
 
                 return _instance;
@@ -40,7 +40,7 @@ namespace HDT_GameRecorder.Utils
         }
 
         [XmlIgnore]
-        public string AppDataPath
+        public static string AppDataPath
         {
             get
             {
@@ -57,9 +57,13 @@ namespace HDT_GameRecorder.Utils
             }
         }
 
-        private void Save() => Hearthstone_Deck_Tracker.XmlManager<PluginConfig>.Save(Instance.ConfigFile, Instance);
+        public void Save()
+        {
+            Hearthstone_Deck_Tracker.XmlManager<PluginConfig>.Save(Instance.ConfigFile, Instance);
+            Hearthstone_Deck_Tracker.Logger.WriteLine("Write recorded config to " + Instance.ConfigFile);
+        }
 
-        private PluginConfig loadFromFile(string file)
+        private static void loadFromFile(string file)
         {
             //Check if directory exists
             if (!Directory.Exists(AppDataPath))
@@ -70,10 +74,22 @@ namespace HDT_GameRecorder.Utils
 
             if (File.Exists(file))
             {
-                return Hearthstone_Deck_Tracker.XmlManager<PluginConfig>.Load(Instance.AppDataPath);
+                _instance =  Hearthstone_Deck_Tracker.XmlManager<PluginConfig>.Load(file);
             } else //require init
             {
-                return null;
+                Hearthstone_Deck_Tracker.Logger.WriteLine("Not found, create new instance manually");
+                List<GameMode> recorded = new List<GameMode>();
+                recorded.Add(GameMode.Practice);
+                recorded.Add(GameMode.Arena);
+                recorded.Add(GameMode.Brawl);
+                recorded.Add(GameMode.Casual);
+                recorded.Add(GameMode.Friendly);
+                recorded.Add(GameMode.Ranked);
+                recorded.Add(GameMode.Spectator);
+                recorded.Add(GameMode.None);
+                _instance = new PluginConfig();
+                _instance.recordedGameModes = recorded;
+                _instance.Save();
             }
         }
     }

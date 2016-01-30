@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Hearthstone_Deck_Tracker.Plugins;
 
 using HDT_GameRecorder.Utils;
-
+using Hearthstone_Deck_Tracker.API;
 
 namespace HDT_GameRecorder
 {
@@ -76,7 +76,7 @@ namespace HDT_GameRecorder
 
         public void OnUnload()
         {
-
+            PluginConfig.Instance.Save();
         }
 
         public void OnUpdate()

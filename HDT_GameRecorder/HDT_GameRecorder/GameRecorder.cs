@@ -7,19 +7,22 @@ using HDT_GameRecorder.Utils;
 
 namespace HDT_GameRecorder
 {
-    class GameRecorder
+    public static class GameRecorder
     {
 
         private static Boolean gameOngoing = false;
 
         public static void Load()
         {
-            //Add callbacks
-            GameEvents.OnGameStart.Add(onGameStart);
-            GameEvents.OnGameEnd.Add(onGameEnd);
+            PluginConfig.Instance.Save();
 
             //Currently ongoing game?
             gameOngoing = !Core.Game.IsInMenu;
+
+
+            //Add callbacks
+            GameEvents.OnGameStart.Add(GameRecorder.onGameStart);
+            GameEvents.OnGameEnd.Add(GameRecorder.onGameEnd);
 
             if (gameOngoing)
             {
@@ -28,18 +31,22 @@ namespace HDT_GameRecorder
             }
         }
 
-        private static void onGameStart()
+        public static void onGameStart()
         {
+            Hearthstone_Deck_Tracker.Logger.WriteLine("VideoGameRecorder: Test start game!");
+            OBSUtils.startObs();
+            
             GameMode currentGameMode = Core.Game.CurrentGameMode;
             if (PluginConfig.Instance.recordedGameModes.Contains(currentGameMode))
             {
+                Hearthstone_Deck_Tracker.Logger.WriteLine("VideoRecorder: Start recording game!");
                 OBSUtils.startRecording();
             }
         }
 
-        private static void onGameEnd()
+        public static void onGameEnd()
         {
-
+            OBSUtils.stopRecording();
         }
     }
 }
