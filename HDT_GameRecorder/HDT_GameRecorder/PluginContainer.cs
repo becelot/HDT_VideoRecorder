@@ -67,6 +67,8 @@ namespace HDT_GameRecorder
                 Hearthstone_Deck_Tracker.Logger.WriteLine(s);
                 Hearthstone_Deck_Tracker.Logger.WriteLine(OBSUtils.isObsRunning().ToString());
             }
+
+            PluginConfig.Instance.Save();
         }
 
         public void OnLoad()

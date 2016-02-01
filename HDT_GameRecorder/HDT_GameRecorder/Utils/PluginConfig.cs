@@ -10,11 +10,17 @@ using System.ComponentModel;
 
 namespace HDT_GameRecorder.Utils
 {
-    class PluginConfig
+    public class PluginConfig
     {
-        [DefaultValue(null)]
+        [XmlArray(ElementName = "RecordedGameMode")]
+        [XmlArrayItem(ElementName ="GameMode")]
         public List<GameMode> recordedGameModes { get; set; }
 
+        [DefaultValue("Hearthstone")]
+        [XmlElement(ElementName = "sceneName")]
+        public String sceneName { get; set; }
+
+        [XmlIgnore]
         private const string STORAGE_FILE_NAME = "config.xml";
 
         //Singleton pattern
@@ -60,7 +66,6 @@ namespace HDT_GameRecorder.Utils
         public void Save()
         {
             Hearthstone_Deck_Tracker.XmlManager<PluginConfig>.Save(Instance.ConfigFile, Instance);
-            Hearthstone_Deck_Tracker.Logger.WriteLine("Write recorded config to " + Instance.ConfigFile);
         }
 
         private static void loadFromFile(string file)
@@ -89,6 +94,7 @@ namespace HDT_GameRecorder.Utils
                 recorded.Add(GameMode.None);
                 _instance = new PluginConfig();
                 _instance.recordedGameModes = recorded;
+                _instance.sceneName = "Hearthstone";
                 _instance.Save();
             }
         }

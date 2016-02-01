@@ -12,6 +12,7 @@ namespace HDT_GameRecorder.Utils
 {
     class OBSUtils
     {
+
         [DllImport("user32.dll")]
         static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, uint wParam, uint lParam);
 
