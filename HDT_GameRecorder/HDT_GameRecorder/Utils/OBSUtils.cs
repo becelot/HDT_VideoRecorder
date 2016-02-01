@@ -161,6 +161,28 @@ namespace HDT_GameRecorder.Utils
             return true;
         }
 
+        public static Key getStartRecordingKey()
+        {
+            IniFile ini = new IniFile(getConfigPath() + @"\profiles\" + PluginConfig.Instance.sceneName);
+            int keyValue;
+            if (Int32.TryParse( ini.IniReadValue("Publish", "StartRecordingHotkey"), out keyValue))
+            {
+                return new Key((Keyboard.Messaging.VKeys)keyValue);
+            }
+            return new Key();
+        }
+
+        public static Key getStopRecordingKey()
+        {
+            IniFile ini = new IniFile(getConfigPath() + @"\profiles\" + PluginConfig.Instance.sceneName);
+            int keyValue;
+            if (Int32.TryParse(ini.IniReadValue("Publish", "StopRecordingHotkey"), out keyValue))
+            {
+                return new Key((Keyboard.Messaging.VKeys)keyValue);
+            }
+            return new Key();
+        }
+
         public static void startRecording()
         {
             //startObs();
