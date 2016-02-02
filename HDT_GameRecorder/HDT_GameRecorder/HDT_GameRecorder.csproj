@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Keyboard\Key.cs" />
     <Compile Include="Keyboard\Messaging.cs" />
+    <Compile Include="Keyboard\OBSKey.cs" />
     <Compile Include="PluginContainer.cs" />
     <Compile Include="GameRecorder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

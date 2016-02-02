@@ -22,7 +22,7 @@ namespace Keyboard
 		///     An internal counter used to count the number of attempts a button has tried to be pressed to exit after 4
 		///     attempts.
 		/// </summary>
-		private int _buttonCounter;
+		protected int _buttonCounter;
 
 		/// <summary>Default constructor</summary>
 		public Key(Messaging.VKeys vk = Messaging.VKeys.NULL, Messaging.VKeys shiftKey = Messaging.VKeys.NULL, Messaging.ShiftType shiftType = Messaging.ShiftType.NONE)
@@ -208,11 +208,26 @@ namespace Keyboard
 			{
 				case Messaging.ShiftType.ALT:
 					alt = true;
-					break;
+                    break;
 				case Messaging.ShiftType.CTRL:
 					ctrl = true;
 					break;
-				case Messaging.ShiftType.NONE:
+                case Messaging.ShiftType.SHIFT:
+                    shift = true;
+                    break;
+                case Messaging.ShiftType.ALT_CTRL:
+                    alt = true; ctrl = true;
+                    break;
+                case Messaging.ShiftType.ALT_SHIFT:
+                    alt = true; shift = true;
+                    break;
+                case Messaging.ShiftType.CTRL_SHIFT:
+                    ctrl = true; shift = true;
+                    break;
+                case Messaging.ShiftType.ALT_CTRL_SHIFT:
+                    ctrl = true; shift = true; alt = true;
+                    break;
+                case Messaging.ShiftType.NONE:
 					if (!Messaging.ForegroundKeyPress(hWnd, this))
 					{
 						_buttonCounter++;
@@ -224,9 +239,6 @@ namespace Keyboard
 						PressForeground(hWnd);
 					}
 					return true;
-				case Messaging.ShiftType.SHIFT:
-					shift = true;
-					break;
 			}
 			if (!Messaging.ForegroundKeyPressAll(hWnd, this, alt, ctrl, shift))
 			{

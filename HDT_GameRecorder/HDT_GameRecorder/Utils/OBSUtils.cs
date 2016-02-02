@@ -149,27 +149,27 @@ namespace HDT_GameRecorder.Utils
             return true;
         }
 
-        public static Key getStartRecordingKey()
+        public static OBSKey getStartRecordingKey()
         {
             IniFile ini = new IniFile(getConfigPath() + @"\profiles\" + PluginConfig.Instance.profileName + ".ini");
             int keyValue;
             if (Int32.TryParse( ini.IniReadValue("Publish", "StartRecordingHotkey"), out keyValue))
             {
                 Hearthstone_Deck_Tracker.Logger.WriteLine("VideoRecorder: Send " + keyValue.ToString());
-                return new Key((Keyboard.Messaging.VKeys)keyValue);
+                return new OBSKey(keyValue);
             }
-            return new Key();
+            return new OBSKey();
         }
 
-        public static Key getStopRecordingKey()
+        public static OBSKey getStopRecordingKey()
         {
             IniFile ini = new IniFile(getConfigPath() + @"\profiles\" + PluginConfig.Instance.profileName + ".ini");
             int keyValue;
             if (Int32.TryParse(ini.IniReadValue("Publish", "StopRecordingHotkey"), out keyValue))
             {
-                return new Key((Keyboard.Messaging.VKeys)keyValue);
+                return new OBSKey(keyValue);
             }
-            return new Key();
+            return new OBSKey();
         }
 
         public static void startRecording()
