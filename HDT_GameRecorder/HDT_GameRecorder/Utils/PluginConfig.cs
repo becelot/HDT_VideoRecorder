@@ -20,8 +20,6 @@ namespace HDT_GameRecorder.Utils
         [XmlElement(ElementName = "profileName")]
         public String profileName { get; set; }
 
-        [DefaultValue(1)]
-        public int recorderActiveAfterGameEnd { get; set; }
 
         [XmlIgnore]
         private const string STORAGE_FILE_NAME = "config.xml";
