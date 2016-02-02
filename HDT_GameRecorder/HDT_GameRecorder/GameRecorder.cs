@@ -23,7 +23,7 @@ namespace HDT_GameRecorder
 
             //Add callbacks
             GameEvents.OnGameStart.Add(GameRecorder.onGameStart);
-            GameEvents.OnGameEnd.Add(GameRecorder.onGameEnd);
+            GameEvents.OnInMenu.Add(GameRecorder.onInMenu);
 
             //Temporary workaround
             if (OBSUtils.isObsRunning())
@@ -48,13 +48,18 @@ namespace HDT_GameRecorder
             {
                 Hearthstone_Deck_Tracker.Logger.WriteLine("VideoRecorder: Start recording game!");
                 OBSUtils.startRecording();
+
+                gameOngoing = true;
             }
         }
 
-        public static void onGameEnd()
+        public static void onInMenu()
         {
-            Thread.Sleep(PluginConfig.Instance.recorderActiveAfterGameEnd);
-            OBSUtils.stopRecording();
+            if (gameOngoing)
+            {
+                OBSUtils.stopRecording();
+            }
+            gameOngoing = false;
         }
     }
 }
