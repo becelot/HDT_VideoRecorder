@@ -196,5 +196,10 @@ namespace HDT_GameRecorder.Utils
 
             Messaging.SetForegroundWindow(foregroundApplication);
         }
+
+        public static void kill()
+        {
+            getProcessInformation().process.Kill();
+        }
     }
 }

@@ -24,16 +24,13 @@ namespace HDT_GameRecorder
             //Add callbacks
             GameEvents.OnGameStart.Add(GameRecorder.onGameStart);
             GameEvents.OnGameEnd.Add(GameRecorder.onGameEnd);
-            
+
+            //Temporary workaround
             if (OBSUtils.isObsRunning())
             {
-                OBSUtils.startRecording();
-                Thread.Sleep(1000);
-                OBSUtils.stopRecording();
-
-                ///TODO: Delete recording
+                OBSUtils.kill();
             }
-
+            
 
             if (gameOngoing)
             {
