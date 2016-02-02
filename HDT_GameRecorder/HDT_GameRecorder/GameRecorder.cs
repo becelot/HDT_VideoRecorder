@@ -4,6 +4,7 @@ using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Enums;
 
 using HDT_GameRecorder.Utils;
+using System.Threading;
 
 namespace HDT_GameRecorder
 {
@@ -23,11 +24,20 @@ namespace HDT_GameRecorder
             //Add callbacks
             GameEvents.OnGameStart.Add(GameRecorder.onGameStart);
             GameEvents.OnGameEnd.Add(GameRecorder.onGameEnd);
+            
+            if (OBSUtils.isObsRunning())
+            {
+                OBSUtils.startRecording();
+                Thread.Sleep(1000);
+                OBSUtils.stopRecording();
+
+                ///TODO: Delete recording
+            }
+
 
             if (gameOngoing)
             {
                 onGameStart();
-
             }
         }
 
@@ -46,6 +56,7 @@ namespace HDT_GameRecorder
 
         public static void onGameEnd()
         {
+            Thread.Sleep(PluginConfig.Instance.recorderActiveAfterGameEnd);
             OBSUtils.stopRecording();
         }
     }

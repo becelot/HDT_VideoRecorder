@@ -7,24 +7,12 @@ using System.Management;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Keyboard;
+using System.Threading;
 
 namespace HDT_GameRecorder.Utils
 {
     class OBSUtils
     {
-
-        [DllImport("user32.dll")]
-        static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, uint wParam, uint lParam);
-
-        [DllImport("user32.dll")]
-        public static extern IntPtr PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
-
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool SetForegroundWindow(IntPtr hWnd);
-
-        [DllImport("user32.dll")]
-        static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
 
         private static String lastExecutablePath = "";
@@ -163,10 +151,11 @@ namespace HDT_GameRecorder.Utils
 
         public static Key getStartRecordingKey()
         {
-            IniFile ini = new IniFile(getConfigPath() + @"\profiles\" + PluginConfig.Instance.sceneName);
+            IniFile ini = new IniFile(getConfigPath() + @"\profiles\" + PluginConfig.Instance.profileName + ".ini");
             int keyValue;
             if (Int32.TryParse( ini.IniReadValue("Publish", "StartRecordingHotkey"), out keyValue))
             {
+                Hearthstone_Deck_Tracker.Logger.WriteLine("VideoRecorder: Send " + keyValue.ToString());
                 return new Key((Keyboard.Messaging.VKeys)keyValue);
             }
             return new Key();
@@ -174,7 +163,7 @@ namespace HDT_GameRecorder.Utils
 
         public static Key getStopRecordingKey()
         {
-            IniFile ini = new IniFile(getConfigPath() + @"\profiles\" + PluginConfig.Instance.sceneName);
+            IniFile ini = new IniFile(getConfigPath() + @"\profiles\" + PluginConfig.Instance.profileName + ".ini");
             int keyValue;
             if (Int32.TryParse(ini.IniReadValue("Publish", "StopRecordingHotkey"), out keyValue))
             {
@@ -188,19 +177,24 @@ namespace HDT_GameRecorder.Utils
             //startObs();
             IntPtr foregroundApplication = Messaging.GetForegroundWindow();
             IntPtr ptr = getProcessInformation().process.MainWindowHandle;
-            Key key = new Key(Messaging.VKeys.KEY_F12);
+            Key key = getStartRecordingKey();
 
-            key.PressForeground(ptr);
+            bool test = key.PressForeground(ptr);
 
+            //SendKeys.SendWait("{F11}");
             Messaging.SetForegroundWindow(foregroundApplication);
         }
 
         public static void stopRecording()
         {
+            IntPtr foregroundApplication = Messaging.GetForegroundWindow();
             IntPtr ptr = getProcessInformation().process.MainWindowHandle;
-            Key key = new Key(Messaging.VKeys.KEY_F12);
+
+            Key key = getStopRecordingKey();
 
             key.PressForeground(ptr);
+
+            Messaging.SetForegroundWindow(foregroundApplication);
         }
     }
 }

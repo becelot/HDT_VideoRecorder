@@ -95,12 +95,18 @@ namespace Keyboard
 		/// </summary>
 		[DllImport("user32.dll")]
 		public static extern IntPtr GetForegroundWindow();
-        
-		[DllImport("user32.dll")]
-		[return: MarshalAs(UnmanagedType.Bool)]
-		public static extern bool SetForegroundWindow(IntPtr hWnd);
 
-		[return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern bool ShowWindow(IntPtr hwnd, int nCmdShow);
+
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool SetForegroundWindow(IntPtr hwnd);
+
+        [DllImport("user32.dll")]
+        public static extern void SwitchToThisWindow(IntPtr hWnd, bool fAltTab);
+
+        [return: MarshalAs(UnmanagedType.Bool)]
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
 		private static extern bool SendMessage(IntPtr hWnd, int wMsg, uint wParam, uint lParam);
 

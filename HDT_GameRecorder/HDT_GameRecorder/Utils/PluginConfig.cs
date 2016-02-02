@@ -17,8 +17,11 @@ namespace HDT_GameRecorder.Utils
         public List<GameMode> recordedGameModes { get; set; }
 
         [DefaultValue("Hearthstone")]
-        [XmlElement(ElementName = "sceneName")]
-        public String sceneName { get; set; }
+        [XmlElement(ElementName = "profileName")]
+        public String profileName { get; set; }
+
+        [DefaultValue(1)]
+        public int recorderActiveAfterGameEnd { get; set; }
 
         [XmlIgnore]
         private const string STORAGE_FILE_NAME = "config.xml";
@@ -94,7 +97,7 @@ namespace HDT_GameRecorder.Utils
                 recorded.Add(GameMode.None);
                 _instance = new PluginConfig();
                 _instance.recordedGameModes = recorded;
-                _instance.sceneName = "Hearthstone";
+                _instance.profileName = "Hearthstone";
                 _instance.Save();
             }
         }
