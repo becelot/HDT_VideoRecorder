@@ -72,6 +72,7 @@ namespace HDT_GameRecorder
         private void profileSettings_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             PluginConfig.Instance.profileName = profileSettings.SelectedItem.ToString();
+            PluginConfig.Instance.Save();
         }
     }
 }
