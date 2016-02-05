@@ -64,15 +64,6 @@ namespace HDT_GameRecorder
 
         public void OnButtonPress()
         {
-            List<string> profiles = OBSUtils.getProfiles();
-
-            foreach(string s in profiles)
-            {
-                Hearthstone_Deck_Tracker.Logger.WriteLine(s);
-                Hearthstone_Deck_Tracker.Logger.WriteLine(OBSUtils.isObsRunning().ToString());
-            }
-
-            PluginConfig.Instance.Save();
             if (_settingsFlyout != null)
             {
                 _settingsFlyout.IsOpen = true;
