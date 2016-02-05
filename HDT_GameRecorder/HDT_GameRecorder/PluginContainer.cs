@@ -5,11 +5,15 @@ using Hearthstone_Deck_Tracker.Plugins;
 
 using HDT_GameRecorder.Utils;
 using Hearthstone_Deck_Tracker.API;
+using MahApps.Metro.Controls;
 
 namespace HDT_GameRecorder
 {
     public class PluginContainer : IPlugin
     {
+        private Flyout _settingsFlyout;
+
+
         public string Author
         {
             get
@@ -69,11 +73,31 @@ namespace HDT_GameRecorder
             }
 
             PluginConfig.Instance.Save();
+            if (_settingsFlyout != null)
+            {
+                _settingsFlyout.IsOpen = true;
+            }
+            
         }
 
         public void OnLoad()
         {
             GameRecorder.Load();
+            SetSettingsFlyoutControl();
+        }
+
+        public void SetSettingsFlyoutControl()
+        {
+            Flyout flyout = new Flyout();
+            SettingsControl settingsControl = new SettingsControl();
+            flyout.Header = "Video Game Recorder";
+            flyout.Content = settingsControl;
+            flyout.Position = Position.Left;
+            Panel.SetZIndex(flyout, 100);
+
+            Hearthstone_Deck_Tracker.API.Core.MainWindow.Flyouts.Items.Add(flyout);
+
+            _settingsFlyout = flyout;
         }
 
         public void OnUnload()
