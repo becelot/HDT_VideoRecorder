@@ -14,7 +14,7 @@ namespace HDT_GameRecorder.Utils
     {
         [XmlArray(ElementName = "RecordedGameMode")]
         [XmlArrayItem(ElementName ="GameMode")]
-        public List<GameMode> recordedGameModes { get; set; }
+        public HashSet<GameMode> recordedGameModes { get; set; }
 
         [DefaultValue("Hearthstone")]
         [XmlElement(ElementName = "profileName")]
@@ -84,7 +84,7 @@ namespace HDT_GameRecorder.Utils
             } else //require init
             {
                 Hearthstone_Deck_Tracker.Logger.WriteLine("Not found, create new instance manually");
-                List<GameMode> recorded = new List<GameMode>();
+                HashSet<GameMode> recorded = new HashSet<GameMode>();
                 recorded.Add(GameMode.Practice);
                 recorded.Add(GameMode.Arena);
                 recorded.Add(GameMode.Brawl);
