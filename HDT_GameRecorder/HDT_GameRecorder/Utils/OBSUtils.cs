@@ -209,5 +209,19 @@ namespace HDT_GameRecorder.Utils
         {
             getProcessInformation().process.Kill();
         }
+
+        public static void createStandardProfile(string profileName)
+        {
+            //Don't overwrite existing configuration
+            if (File.Exists(getConfigPath() + @"\profiles\" + profileName + ".ini"))
+            {
+                return;
+            }
+            FileStream fs = File.Create(getConfigPath() + @"\profiles\" + profileName + ".ini");
+            StreamWriter sw = new StreamWriter(fs);
+
+            sw.Write("");
+
+        }
     }
 }
