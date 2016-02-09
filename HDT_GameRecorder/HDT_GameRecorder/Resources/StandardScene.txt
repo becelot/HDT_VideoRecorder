@@ -1,14 +1,14 @@
-﻿  {0} : {
+﻿  {0} : {{
     class : Scene
-    sources : {
-      HEarthstone : {
+    sources : {{
+      Hearthstone : {{
         render : 1
         class : GlobalSource
-        data : {
-          name : Hearthstone
-        }
+        data : {{
+          name : {0}
+        }}
         cx : {1}
         cy : {2}
-      }
-    }
-  }
+      }}
+    }}
+  }}

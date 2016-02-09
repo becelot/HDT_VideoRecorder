@@ -1,6 +1,6 @@
-﻿  {0} : {
+﻿  {0} : {{
     class : GraphicsCapture
-    data : {
+    data : {{
       window : "[Hearthstone]: Hearthstone"
       windowClass : UnityWndClass
       executable : hearthstone.exe
@@ -13,7 +13,7 @@
       useHotkey : 0
       hotkey : 0
       gamma : 100
-    }
+    }}
     cx : {1}
     cy : {2}
-  }
+  }}
