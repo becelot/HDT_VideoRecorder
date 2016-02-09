@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel Margin="5,5,5,0">
         <GroupBox x:Name="obsSettings" Header="OBS Settings">
-            <StackPanel>
+            <StackPanel x:Name="obsStackPanel">
                 <DockPanel>
                     <ComboBox x:Name="profileSettings" SelectionChanged="profileSettings_SelectionChanged" Margin="5,10,0,0">
                     </ComboBox>
