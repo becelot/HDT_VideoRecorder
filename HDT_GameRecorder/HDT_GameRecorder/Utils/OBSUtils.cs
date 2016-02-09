@@ -253,6 +253,10 @@ namespace HDT_GameRecorder.Utils
             ini.IniWriteValue("Video", "BaseHeight", Screen.PrimaryScreen.Bounds.Height.ToString());
             ini.IniWriteValue("Video", "BaseWidth", Screen.PrimaryScreen.Bounds.Width.ToString());
             ini.IniWriteValue("Publish", "SavePath", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)+ @"\Videos\Recorded\$T.mp4");
+
+            OBSUtils.kill();
+            ini = new IniFile(getConfigPath() + @"\global.ini");
+            ini.IniWriteValue("General", "Profile", profileName);
             await DialogManager.ShowMessageAsync(Hearthstone_Deck_Tracker.API.Core.MainWindow, "Created profile", "Profile creation sucessfull!", MessageDialogStyle.Affirmative);
 
         }
