@@ -131,5 +131,10 @@ namespace HDT_GameRecorder
             SetOBSProfileNames();
             SetOBSStatusNotification();
         }
+
+        private void createProfileButton_Click(object sender, RoutedEventArgs e)
+        {
+            OBSUtils.createStandardProfile("Hearthstone");
+        }
     }
 }
