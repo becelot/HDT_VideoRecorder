@@ -4,13 +4,9 @@ using System.IO;
 using System.Diagnostics;
 using System.Linq;
 using System.Management;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Keyboard;
-using System.Threading;
 using MahApps.Metro.Controls.Dialogs;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 
 namespace HDT_GameRecorder.Utils
