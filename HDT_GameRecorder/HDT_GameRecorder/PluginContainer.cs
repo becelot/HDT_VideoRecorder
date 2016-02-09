@@ -79,14 +79,17 @@ namespace HDT_GameRecorder
 
         public void SetSettingsFlyoutControl()
         {
+            var window = Hearthstone_Deck_Tracker.API.Core.MainWindow;
+            var flyouts = window.Flyouts.Items;
+
             Flyout flyout = new Flyout();
-            SettingsControl settingsControl = new SettingsControl();
+            flyout.Name = "PluginSettingsFlyoutControl";
             flyout.Header = "Video Game Recorder";
-            flyout.Content = settingsControl;
+            flyout.Content = new SettingsControl();
             flyout.Position = Position.Left;
             Panel.SetZIndex(flyout, 100);
 
-            Hearthstone_Deck_Tracker.API.Core.MainWindow.Flyouts.Items.Add(flyout);
+            flyouts.Add(flyout);
 
             _settingsFlyout = flyout;
         }
