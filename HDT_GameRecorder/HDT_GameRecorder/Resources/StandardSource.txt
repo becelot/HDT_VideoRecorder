@@ -1,4 +1,4 @@
-﻿  Hearthstone : {
+﻿  {0} : {
     class : GraphicsCapture
     data : {
       window : "[Hearthstone]: Hearthstone"
@@ -11,9 +11,9 @@
       invertMouse : 0
       safeHook : 0
       useHotkey : 0
-      hotkey : 123
+      hotkey : 0
       gamma : 100
     }
-    cx : 1920
-    cy : 1080
+    cx : {1}
+    cy : {2}
   }

@@ -1,4 +1,4 @@
-﻿  Hearthstone : {
+﻿  {0} : {
     class : Scene
     sources : {
       HEarthstone : {
@@ -7,8 +7,8 @@
         data : {
           name : Hearthstone
         }
-        cx : 1920
-        cy : 1080
+        cx : {1}
+        cy : {2}
       }
     }
   }
