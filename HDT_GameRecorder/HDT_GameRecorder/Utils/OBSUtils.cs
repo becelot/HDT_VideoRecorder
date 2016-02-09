@@ -213,6 +213,9 @@ namespace HDT_GameRecorder.Utils
 
         public static void createStandardScene(string sceneName)
         {
+            //Kill OBS so that it does not override our settings again
+            OBSUtils.kill();
+
             String json;
             using (StreamReader sr = new StreamReader(OBSUtils.getConfigPath() + @"\sceneCollection\scenes.xconfig"))
             {
@@ -246,7 +249,6 @@ namespace HDT_GameRecorder.Utils
             }
 
 
-            Hearthstone_Deck_Tracker.Logger.WriteLine(scenes + sources);
             using (StreamWriter sw = new StreamWriter(getConfigPath() + @"\sceneCollection\scenes.xconfig"))
             {
                 sw.WriteLine(scenes + sources);
@@ -275,6 +277,9 @@ namespace HDT_GameRecorder.Utils
 
         public async static Task<Boolean> createStandardProfile(string profileName)
         {
+            //Kill OBS so that it does not override our settings again
+            OBSUtils.kill();
+
             //Check for existing profile
             if (File.Exists(getConfigPath() + @"\profiles\" + profileName + ".ini"))
             {
@@ -294,14 +299,14 @@ namespace HDT_GameRecorder.Utils
 
             sw.Close();
 
-
+            
             IniFile ini = new IniFile(getConfigPath() + @"\profiles\" + profileName + ".ini");
 
             ini.IniWriteValue("Video", "BaseHeight", Screen.PrimaryScreen.Bounds.Height.ToString());
             ini.IniWriteValue("Video", "BaseWidth", Screen.PrimaryScreen.Bounds.Width.ToString());
             ini.IniWriteValue("Publish", "SavePath", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)+ @"\Videos\Recorded\$T.mp4");
 
-            OBSUtils.kill();
+            
             ini = new IniFile(getConfigPath() + @"\global.ini");
             ini.IniWriteValue("General", "Profile", profileName);
             await DialogManager.ShowMessageAsync(Hearthstone_Deck_Tracker.API.Core.MainWindow, "Created profile", "Profile creation sucessfull!", MessageDialogStyle.Affirmative);
