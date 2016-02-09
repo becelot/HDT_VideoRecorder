@@ -28,7 +28,11 @@ namespace HDT_GameRecorder
         {
             InitializeComponent();
             SetRecordedGameModes();
-            
+            SetOBSProfileNames();
+        }
+
+        private void SetOBSProfileNames()
+        {
             foreach (String p in OBSUtils.getProfiles())
             {
                 profileSettings.Items.Add(p);
