@@ -38,6 +38,11 @@ namespace HDT_GameRecorder
 
         private void SetOBSStatusNotification()
         {
+            if (obsInstallStatusPanel != null)
+            {
+                obsStackPanel.Children.Remove(obsInstallStatusPanel);
+                obsInstallStatusPanel.Children.Clear();
+            }
             obsInstallStatusPanel = new DockPanel();
             obsInstallStatusPanel.Margin = new Thickness(5, 5, 5, 0);
             obsInstallStatusPanel.HorizontalAlignment = HorizontalAlignment.Center;
@@ -72,6 +77,7 @@ namespace HDT_GameRecorder
 
         private void SetOBSProfileNames()
         {
+            profileSettings.Items.Clear();
             foreach (String p in OBSUtils.getProfiles())
             {
                 profileSettings.Items.Add(p);
