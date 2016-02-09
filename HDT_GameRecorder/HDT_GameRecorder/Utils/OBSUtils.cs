@@ -221,17 +221,33 @@ namespace HDT_GameRecorder.Utils
             StreamWriter sw = new StreamWriter(fs);
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            var resourceName = "HDT_GameRecorder.StandardProfile.txt";
+            var resourceName = "HDT_GameRecorder.Resources.StandardProfile.txt";
 
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+
+            if (assembly.GetManifestResourceNames().Length == 0)
             {
-                using (StreamReader sr = new StreamReader(stream))
+                Hearthstone_Deck_Tracker.Logger.WriteLine("No resource found!");
+            }
+            foreach (string s in assembly.GetManifestResourceNames())
+            {
+                Hearthstone_Deck_Tracker.Logger.WriteLine(s);
+            }
+            try
+            {
+                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
                 {
-                    string result = sr.ReadToEnd();
-                    sw.Write(result);
+                    using (StreamReader sr = new StreamReader(stream))
+                    {
+                        string result = sr.ReadToEnd();
+                        sw.Write(result);
+                    }
                 }
+            } catch (Exception e)
+            {
+
             }
 
+            sw.Close();
             
 
         }
