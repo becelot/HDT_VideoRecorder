@@ -23,6 +23,9 @@ namespace HDT_GameRecorder
     /// </summary>
     public partial class SettingsControl : UserControl
     {
+        private DockPanel obsInstallStatusPanel;
+
+
         Dictionary<CheckBox, GameMode> checkBoxToModeDict;
 
         public SettingsControl()
@@ -35,6 +38,9 @@ namespace HDT_GameRecorder
 
         private void SetOBSStatusNotification()
         {
+            obsInstallStatusPanel = new DockPanel();
+            obsInstallStatusPanel.Margin = new Thickness(5, 5, 5, 0);
+            obsInstallStatusPanel.HorizontalAlignment = HorizontalAlignment.Center;
 
 
             if (OBSUtils.isObsInstalled())
@@ -44,35 +50,24 @@ namespace HDT_GameRecorder
                 testLabel.Margin = new Thickness(5, 5, 5, 0);
                 testLabel.HorizontalAlignment = HorizontalAlignment.Center;
                 testLabel.Content = "OBS installation was found";
-                obsStackPanel.Children.Add(testLabel);
+
+                obsInstallStatusPanel.Children.Add(testLabel);
             }
             else {
-                //DockPanel
-                DockPanel dp = new DockPanel();
-                dp.Margin = new Thickness(5, 5, 5, 0);
-                dp.HorizontalAlignment = HorizontalAlignment.Stretch;
-
                 //Label
                 Label statusLabel = new Label();
                 statusLabel.Content = "OBS is not installed";
-                dp.Children.Add(statusLabel);
+                obsInstallStatusPanel.Children.Add(statusLabel);
 
                 //Button
                 Button downloadButton = new Button();
                 downloadButton.Margin = new Thickness(5, 0, 0, 0);
                 downloadButton.Content = "Download OBS";
-                downloadButton.Click += DownloadButton_Click;
-                dp.Children.Add(downloadButton);
-
-                obsStackPanel.Children.Add(dp);
+                downloadButton.Click += (sender, e) => Process.Start("http://google.de");
+                obsInstallStatusPanel.Children.Add(downloadButton);
             }
 
-            
-        }
-
-        private void DownloadButton_Click(object sender, RoutedEventArgs e)
-        {
-            Process.Start("http://google.de");
+            obsStackPanel.Children.Add(obsInstallStatusPanel);
         }
 
         private void SetOBSProfileNames()
