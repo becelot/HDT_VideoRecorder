@@ -12,7 +12,7 @@
                 <DockPanel>
                     <ComboBox x:Name="profileSettings" SelectionChanged="profileSettings_SelectionChanged" Margin="5,10,0,0">
                     </ComboBox>
-                    <Button x:Name="reloadButton" Content="Reload" Margin="5,10,5,0"/>
+                    <Button x:Name="reloadProfileButton" Content="Reload" Margin="5,10,5,0"/>
                 </DockPanel>
             </StackPanel>
         </GroupBox>
@@ -44,5 +44,6 @@
                         Unchecked="CheckboxChecked" />
             </StackPanel>
         </GroupBox>
+        <Button x:Name="reloadButton" Content="Reload Plugin" Margin="5,5,5,5" HorizontalAlignment="Right" Click="reloadButton_Click"/>
     </StackPanel>
 </UserControl>

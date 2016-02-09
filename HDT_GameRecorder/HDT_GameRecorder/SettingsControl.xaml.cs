@@ -43,6 +43,7 @@ namespace HDT_GameRecorder
                 obsStackPanel.Children.Remove(obsInstallStatusPanel);
                 obsInstallStatusPanel.Children.Clear();
             }
+
             obsInstallStatusPanel = new DockPanel();
             obsInstallStatusPanel.Margin = new Thickness(5, 5, 5, 0);
             obsInstallStatusPanel.HorizontalAlignment = HorizontalAlignment.Center;
@@ -122,6 +123,13 @@ namespace HDT_GameRecorder
         {
             PluginConfig.Instance.profileName = profileSettings.SelectedItem.ToString();
             PluginConfig.Instance.Save();
+        }
+
+        private void reloadButton_Click(object sender, RoutedEventArgs e)
+        {
+            SetRecordedGameModes();
+            SetOBSProfileNames();
+            SetOBSStatusNotification();
         }
     }
 }
