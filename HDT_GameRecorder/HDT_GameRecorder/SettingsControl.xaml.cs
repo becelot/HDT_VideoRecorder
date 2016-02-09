@@ -1,17 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.Enums;
 using HDT_GameRecorder.Utils;
 using System.Diagnostics;
@@ -85,7 +75,14 @@ namespace HDT_GameRecorder
             {
                 profileSettings.Items.Add(p);
             }
-            profileSettings.SelectedItem = PluginConfig.Instance.profileName;
+            try
+            {
+                profileSettings.SelectedItem = PluginConfig.Instance.profileName;
+            } catch (Exception)
+            {
+                profileSettings.SelectedIndex = 0;
+            }
+            
         }
 
         private void SetRecordedGameModes()
@@ -123,8 +120,12 @@ namespace HDT_GameRecorder
 
         private void profileSettings_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            PluginConfig.Instance.profileName = profileSettings.SelectedItem.ToString();
-            PluginConfig.Instance.Save();
+            if (profileSettings.SelectedItem != null)
+            {
+                PluginConfig.Instance.profileName = profileSettings.SelectedItem.ToString();
+                PluginConfig.Instance.Save();
+            }
+
         }
 
         private void reloadButton_Click(object sender, RoutedEventArgs e)
@@ -142,10 +143,11 @@ namespace HDT_GameRecorder
 
             if (result != null && !result.Equals(""))
             {
-                OBSUtils.createStandardProfile(result);
+                await OBSUtils.createStandardProfile(result);
                 reloadButton_Click(null, null);
             }
-            
+
+            OBSUtils.createStandardScene("Hearthstone");
         }
     }
 }
