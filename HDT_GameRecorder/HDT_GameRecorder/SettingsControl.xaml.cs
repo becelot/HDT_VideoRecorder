@@ -49,6 +49,9 @@ namespace HDT_GameRecorder
                 testLabel.HorizontalAlignment = HorizontalAlignment.Center;
                 testLabel.Content = "OBS installation was found";
 
+                createProfileButton.IsEnabled = true;
+                createSceneButton.IsEnabled = true;
+
                 obsInstallStatusPanel.Children.Add(testLabel);
             }
             else {
@@ -56,6 +59,9 @@ namespace HDT_GameRecorder
                 Label statusLabel = new Label();
                 statusLabel.Content = "OBS is not installed";
                 obsInstallStatusPanel.Children.Add(statusLabel);
+
+                createProfileButton.IsEnabled = false;
+                createSceneButton.IsEnabled = false;
 
                 //Button
                 Button downloadButton = new Button();
@@ -148,6 +154,19 @@ namespace HDT_GameRecorder
             }
 
             OBSUtils.createStandardScene("Hearthstone");
+        }
+
+        private async void createSceneButton_Click(object sender, RoutedEventArgs e)
+        {
+            MetroWindow window = Hearthstone_Deck_Tracker.API.Core.MainWindow;
+
+            var result = await DialogManager.ShowInputAsync(window, "Profile name!", "Give a new name to the profile:");
+
+            if (result != null && !result.Equals(""))
+            {
+                OBSUtils.createStandardScene(result);
+                reloadButton_Click(null, null);
+            }
         }
     }
 }

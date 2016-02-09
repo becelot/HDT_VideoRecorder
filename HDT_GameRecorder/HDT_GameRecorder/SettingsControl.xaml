@@ -14,7 +14,8 @@
                     </ComboBox>
                     <Button x:Name="reloadProfileButton" Content="Reload" Margin="5,10,5,0"/>
                 </DockPanel>
-                <Button x:Name="createProfileButton" Content="Create standard profile" Margin="5,5,5,0" Click="createProfileButton_Click" />
+                <Button x:Name="createProfileButton" IsEnabled="False" Content="Create standard profile" Margin="5,5,5,0" Click="createProfileButton_Click" />
+                <Button x:Name="createSceneButton" IsEnabled="False" Content="Create standard scene" Margin="5,5,5,0" Click="createSceneButton_Click" />
             </StackPanel>
         </GroupBox>
         <GroupBox x:Name="groupBox" Header="Recorded Game Modes">
