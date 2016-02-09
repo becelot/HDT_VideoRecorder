@@ -9,6 +9,9 @@ using System.Windows.Forms;
 using Keyboard;
 using System.Threading;
 using MahApps.Metro.Controls.Dialogs;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
 
 namespace HDT_GameRecorder.Utils
 {
@@ -212,7 +215,18 @@ namespace HDT_GameRecorder.Utils
                 getProcessInformation().process.Kill();
         }
 
-        public async static void createStandardProfile(string profileName)
+        public static void createStandardScene(string sceneName)
+        {
+            string json;
+            using (StreamReader sr = new StreamReader(OBSUtils.getConfigPath() + @"\scenes.xconfig"))
+            {
+                json = sr.ReadToEnd();
+            }
+            
+             
+        }
+
+        public async static Task<Boolean> createStandardProfile(string profileName)
         {
             //Check for existing profile
             if (File.Exists(getConfigPath() + @"\profiles\" + profileName + ".ini"))
@@ -221,7 +235,7 @@ namespace HDT_GameRecorder.Utils
                 var overwrite = await DialogManager.ShowMessageAsync(Hearthstone_Deck_Tracker.API.Core.MainWindow, "Profile does exist", "A profile with the same name does already exist. Overwrite?", MessageDialogStyle.AffirmativeAndNegative);
                 if (overwrite == MessageDialogResult.Negative) 
                 {
-                    return;
+                    return false;
                 }
             }
             FileStream fs = File.Create(getConfigPath() + @"\profiles\" + profileName + ".ini");
@@ -260,6 +274,7 @@ namespace HDT_GameRecorder.Utils
             ini.IniWriteValue("General", "Profile", profileName);
             await DialogManager.ShowMessageAsync(Hearthstone_Deck_Tracker.API.Core.MainWindow, "Created profile", "Profile creation sucessfull!", MessageDialogStyle.Affirmative);
 
+            return true;
         }
     }
 }
