@@ -143,6 +143,7 @@ namespace HDT_GameRecorder
             if (result != null && !result.Equals(""))
             {
                 OBSUtils.createStandardProfile(result);
+                reloadButton_Click(null, null);
             }
             
         }
