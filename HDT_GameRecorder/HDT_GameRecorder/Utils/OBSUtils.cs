@@ -208,7 +208,8 @@ namespace HDT_GameRecorder.Utils
 
         public static void kill()
         {
-            getProcessInformation().process.Kill();
+            if (OBSUtils.isObsRunning())
+                getProcessInformation().process.Kill();
         }
 
         public async static void createStandardProfile(string profileName)
