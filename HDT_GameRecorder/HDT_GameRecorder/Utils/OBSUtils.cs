@@ -213,13 +213,64 @@ namespace HDT_GameRecorder.Utils
 
         public static void createStandardScene(string sceneName)
         {
-            string json;
-            using (StreamReader sr = new StreamReader(OBSUtils.getConfigPath() + @"\scenes.xconfig"))
+            String json;
+            using (StreamReader sr = new StreamReader(OBSUtils.getConfigPath() + @"\sceneCollection\scenes.xconfig"))
             {
                 json = sr.ReadToEnd();
             }
-            
-             
+            String scenes = json.Substring(0, json.IndexOf("global sources"));
+            if (!scenes.Contains(" " + sceneName + " "))
+            {
+                String[] split = scenes.Split('\n');
+                scenes = split[0] + '\n';
+                scenes += String.Format(readFromResourceStream("HDT_GameRecorder.Resources.StandardScene.txt"), sceneName, Screen.PrimaryScreen.Bounds.Width.ToString(), Screen.PrimaryScreen.Bounds.Height.ToString()) + '\n';
+                foreach (String s in split.Skip(1))
+                {
+                    if (s == "") continue;
+                    scenes += s + '\n';
+                }
+            }
+
+
+            String sources = json.Substring(json.IndexOf("global sources"), json.Length - json.IndexOf("global sources"));
+            if (!sources.Contains(" " + sceneName + " "))
+            {
+                String[] split = sources.Split('\n');
+                sources = split[0] + '\n';
+                sources += String.Format(readFromResourceStream("HDT_GameRecorder.Resources.StandardSource.txt"), sceneName, Screen.PrimaryScreen.Bounds.Width.ToString(), Screen.PrimaryScreen.Bounds.Height.ToString()) + '\n';
+                foreach (String s in split.Skip(1))
+                {
+                    if (s == "") continue;
+                    sources += s + '\n';
+                }
+            }
+
+
+            Hearthstone_Deck_Tracker.Logger.WriteLine(scenes + sources);
+            using (StreamWriter sw = new StreamWriter(getConfigPath() + @"\sceneCollection\scenes.xconfig"))
+            {
+                sw.WriteLine(scenes + sources);
+            }
+        }
+
+        private static string readFromResourceStream(string resourceName)
+        {
+            try
+            {
+                using (Stream stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
+                {
+                    using (StreamReader sr = new StreamReader(stream))
+                    {
+                        string result = sr.ReadToEnd();
+                        return result;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return "";
         }
 
         public async static Task<Boolean> createStandardProfile(string profileName)
@@ -237,24 +288,9 @@ namespace HDT_GameRecorder.Utils
             FileStream fs = File.Create(getConfigPath() + @"\profiles\" + profileName + ".ini");
             StreamWriter sw = new StreamWriter(fs);
 
-            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            var resourceName = "HDT_GameRecorder.Resources.StandardProfile.txt";
+            string result = readFromResourceStream("HDT_GameRecorder.Resources.StandardProfile.txt");
 
-
-            try
-            {
-                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-                {
-                    using (StreamReader sr = new StreamReader(stream))
-                    {
-                        string result = sr.ReadToEnd();
-                        sw.Write(result);
-                    }
-                }
-            } catch (Exception)
-            {
-
-            }
+            sw.Write(result);
 
             sw.Close();
 
