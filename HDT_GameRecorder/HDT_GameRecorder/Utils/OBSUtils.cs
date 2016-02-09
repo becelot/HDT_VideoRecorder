@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Keyboard;
 using System.Threading;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace HDT_GameRecorder.Utils
 {
@@ -210,12 +211,16 @@ namespace HDT_GameRecorder.Utils
             getProcessInformation().process.Kill();
         }
 
-        public static void createStandardProfile(string profileName)
+        public async static void createStandardProfile(string profileName)
         {
             //Don't overwrite existing configuration
             if (File.Exists(getConfigPath() + @"\profiles\" + profileName + ".ini"))
             {
-                return;
+                var overwrite = await DialogManager.ShowInputAsync(Hearthstone_Deck_Tracker.API.Core.MainWindow, "Profile does exist", "A profile with the same name does already exist. Overwrite? (type \"yes\"/\"no\") ");
+                if (overwrite == null || !overwrite.ToLower().Equals("yes")) 
+                {
+                    return;
+                }
             }
             FileStream fs = File.Create(getConfigPath() + @"\profiles\" + profileName + ".ini");
             StreamWriter sw = new StreamWriter(fs);
@@ -234,7 +239,7 @@ namespace HDT_GameRecorder.Utils
                         sw.Write(result);
                     }
                 }
-            } catch (Exception e)
+            } catch (Exception)
             {
 
             }

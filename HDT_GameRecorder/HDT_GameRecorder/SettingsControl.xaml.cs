@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.Enums;
 using HDT_GameRecorder.Utils;
 using System.Diagnostics;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace HDT_GameRecorder
 {
@@ -132,9 +134,17 @@ namespace HDT_GameRecorder
             SetOBSStatusNotification();
         }
 
-        private void createProfileButton_Click(object sender, RoutedEventArgs e)
+        private async void createProfileButton_Click(object sender, RoutedEventArgs e)
         {
-            OBSUtils.createStandardProfile("Hearthstone");
+            MetroWindow window = Hearthstone_Deck_Tracker.API.Core.MainWindow;
+
+            var result = await DialogManager.ShowInputAsync(window, "Profile name!", "Give a new name to the profile:");
+
+            if (result != null && !result.Equals(""))
+            {
+                OBSUtils.createStandardProfile(result);
+            }
+            
         }
     }
 }
