@@ -220,7 +220,19 @@ namespace HDT_GameRecorder.Utils
             FileStream fs = File.Create(getConfigPath() + @"\profiles\" + profileName + ".ini");
             StreamWriter sw = new StreamWriter(fs);
 
-            sw.Write("");
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            var resourceName = "HDT_GameRecorder.StandardProfile.txt";
+
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader sr = new StreamReader(stream))
+                {
+                    string result = sr.ReadToEnd();
+                    sw.Write(result);
+                }
+            }
+
+            
 
         }
     }
