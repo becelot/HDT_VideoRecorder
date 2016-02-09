@@ -213,11 +213,12 @@ namespace HDT_GameRecorder.Utils
 
         public async static void createStandardProfile(string profileName)
         {
-            //Don't overwrite existing configuration
+            //Check for existing profile
             if (File.Exists(getConfigPath() + @"\profiles\" + profileName + ".ini"))
             {
-                var overwrite = await DialogManager.ShowInputAsync(Hearthstone_Deck_Tracker.API.Core.MainWindow, "Profile does exist", "A profile with the same name does already exist. Overwrite? (type \"yes\"/\"no\") ");
-                if (overwrite == null || !overwrite.ToLower().Equals("yes")) 
+                //Ask to overwrite profile
+                var overwrite = await DialogManager.ShowMessageAsync(Hearthstone_Deck_Tracker.API.Core.MainWindow, "Profile does exist", "A profile with the same name does already exist. Overwrite?", MessageDialogStyle.AffirmativeAndNegative);
+                if (overwrite == MessageDialogResult.Negative) 
                 {
                     return;
                 }
@@ -252,8 +253,7 @@ namespace HDT_GameRecorder.Utils
             ini.IniWriteValue("Video", "BaseHeight", Screen.PrimaryScreen.Bounds.Height.ToString());
             ini.IniWriteValue("Video", "BaseWidth", Screen.PrimaryScreen.Bounds.Width.ToString());
             ini.IniWriteValue("Publish", "SavePath", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)+ @"\Videos\Recorded\$T.mp4");
-
-            
+            await DialogManager.ShowMessageAsync(Hearthstone_Deck_Tracker.API.Core.MainWindow, "Created profile", "Profile creation sucessfull!", MessageDialogStyle.Affirmative);
 
         }
     }
