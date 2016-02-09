@@ -32,9 +32,11 @@
   <ItemGroup>
     <Reference Include="Hearthstone Deck Tracker">
       <HintPath>..\..\..\..\..\Desktop\Hearthstone Deck Tracker\Hearthstone Deck Tracker.exe</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="MahApps.Metro">
       <HintPath>..\..\..\..\..\Desktop\Hearthstone Deck Tracker\MahApps.Metro.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
