@@ -152,15 +152,13 @@ namespace HDT_GameRecorder
                 await OBSUtils.createStandardProfile(result);
                 reloadButton_Click(null, null);
             }
-
-            OBSUtils.createStandardScene("Hearthstone");
         }
 
         private async void createSceneButton_Click(object sender, RoutedEventArgs e)
         {
             MetroWindow window = Hearthstone_Deck_Tracker.API.Core.MainWindow;
 
-            var result = await DialogManager.ShowInputAsync(window, "Profile name!", "Give a new name to the profile:");
+            var result = await DialogManager.ShowInputAsync(window, "Scene name!", "Give a new name to the scene:");
 
             if (result != null && !result.Equals(""))
             {
