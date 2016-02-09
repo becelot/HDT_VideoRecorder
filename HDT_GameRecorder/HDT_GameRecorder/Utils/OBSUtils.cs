@@ -141,7 +141,15 @@ namespace HDT_GameRecorder.Utils
         {
             //Get standard configuration path of OBS
             string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\OBS";
+
+            //If %appdata%/OBS does not exist
             if (!Directory.Exists(path))
+            {
+                return false;
+            }
+
+            //if OBS.exe does not exist
+            if (!File.Exists(getExecutablePath()))
             {
                 return false;
             }
