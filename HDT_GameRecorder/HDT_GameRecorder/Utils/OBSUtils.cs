@@ -224,14 +224,6 @@ namespace HDT_GameRecorder.Utils
             var resourceName = "HDT_GameRecorder.Resources.StandardProfile.txt";
 
 
-            if (assembly.GetManifestResourceNames().Length == 0)
-            {
-                Hearthstone_Deck_Tracker.Logger.WriteLine("No resource found!");
-            }
-            foreach (string s in assembly.GetManifestResourceNames())
-            {
-                Hearthstone_Deck_Tracker.Logger.WriteLine(s);
-            }
             try
             {
                 using (Stream stream = assembly.GetManifestResourceStream(resourceName))
@@ -248,6 +240,14 @@ namespace HDT_GameRecorder.Utils
             }
 
             sw.Close();
+
+
+            IniFile ini = new IniFile(getConfigPath() + @"\profiles\" + profileName + ".ini");
+
+            ini.IniWriteValue("Video", "BaseHeight", Screen.PrimaryScreen.Bounds.Height.ToString());
+            ini.IniWriteValue("Video", "BaseWidth", Screen.PrimaryScreen.Bounds.Width.ToString());
+            ini.IniWriteValue("Publish", "SavePath", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)+ @"\Videos\Recorded\$T.mp4");
+
             
 
         }
