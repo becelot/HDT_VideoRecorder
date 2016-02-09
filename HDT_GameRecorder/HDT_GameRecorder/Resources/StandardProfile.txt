@@ -6,43 +6,77 @@ MuteMicHotkey=0
 PushToTalkHotkey2=0
 PushToTalkHotkey=0
 UsePushToTalk=0
+MicMutedVolume=1.000000
+SyncToVideoTime=0
 DesktopVolume=1.000000
-MicVolume=1.000000
+MicVolume=0.000000
 Device=Default
 
 [Video]
-BaseHeight=768
-BaseWidth=1366
+Gamma=0
+Filter=1
+FullRange=0
+UnlockFPS=0
 DisableAero=0
 Downscale=1.000000
-FPS=30
+FPS=60
 Monitor=0
 
 [Video Encoding]
-NVENCPreset=Automatic
+QSVPreset=1
+QSVUseVideoEncoderSettings=0
+CustomQSVSettings=
+CustomSettings=
+UseCustomSettings=0
+UseCFR=1
+KeyframeInterval=2
+NVENCPreset=High Quality
 X264Profile=high
+UseBufferSize=1
+PadCBR=1
+UseCBR=1
+Encoder=x264
 Quality=8
-Preset=veryfast
-MaxBitrate=1000
-BufferSize=1000
+Preset=faster
+MaxBitrate=6000
+BufferSize=6000
 
 [Audio Encoding]
+Codec=AAC
 isStereo=1
 Bitrate=128
-Format=1
+Format=0
 
 [Publish]
 RecordFromReplayBufferHotkey=0
 SaveReplayBufferHotkey=0
 StartReplayBufferHotkey=0
 StopReplayBufferHotkey=0
-StartRecordingHotkey=1091
-StopRecordingHotkey=634
+StartRecordingHotkey=122
+StopRecordingHotkey=121
 StartStreamHotkey=0
 StopStreamHotkey=0
+DisableSendWindowOptimization=0
+LowLatencyMethod=0
+LatencyFactor=20
 BindToIP=Default
-Mode=0
+ReplayBufferSavePath=
+ReplayBufferLength=1
+SaveToFile=0
+Delay=0
+KeepRecording=0
+AutoReconnectTimeout=10
+AutoReconnect=1
+LowLatencyMode=0
+URL=
+PlayPath=
+ServiceFile=
+Mode=1
 Service=0
+
+[General]
+Priority=Normal
+UseMultithreadedOptimizations=1
 
 [QSV (Advanced)]
 BufferSizeInKB=0
