@@ -1,0 +1,19 @@
+﻿  Hearthstone : {
+    class : GraphicsCapture
+    data : {
+      window : "[Hearthstone]: Hearthstone"
+      windowClass : UnityWndClass
+      executable : hearthstone.exe
+      stretchImage : 0
+      alphaBlend : 0
+      ignoreAspect : 0
+      captureMouse : 1
+      invertMouse : 0
+      safeHook : 0
+      useHotkey : 0
+      hotkey : 123
+      gamma : 100
+    }
+    cx : 1920
+    cy : 1080
+  }

@@ -1,0 +1,14 @@
+﻿  Hearthstone : {
+    class : Scene
+    sources : {
+      HEarthstone : {
+        render : 1
+        class : GlobalSource
+        data : {
+          name : Hearthstone
+        }
+        cx : 1920
+        cy : 1080
+      }
+    }
+  }
