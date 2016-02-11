@@ -67,7 +67,7 @@ namespace HDT_GameRecorder
                 Button downloadButton = new Button();
                 downloadButton.Margin = new Thickness(5, 0, 0, 0);
                 downloadButton.Content = "Download OBS";
-                downloadButton.Click += (sender, e) => Process.Start("http://google.de");
+                downloadButton.Click += (sender, e) => Process.Start("https://obsproject.com/");
                 obsInstallStatusPanel.Children.Add(downloadButton);
             }
 
